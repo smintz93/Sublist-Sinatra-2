@@ -19,10 +19,8 @@ CREATE TABLE games(
     game_time VARCHAR(256),
     team1_id INT REFERENCES teams(id),
     team2_id INT REFERENCES teams(id)
-
-
-    
 );
+
 CREATE TABLE players(
     id SERIAL PRIMARY KEY,
     username VARCHAR(256),
@@ -30,8 +28,7 @@ CREATE TABLE players(
     name VARCHAR(256),
     pos VARCHAR(3),
     email VARCHAR(256),
-    phone VARCHAR(15)
-    -- game_id INT REFERENCES games(id)
+    phone VARCHAR(32)
 
 );
 

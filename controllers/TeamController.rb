@@ -40,6 +40,7 @@ class TeamController < ApplicationController
 			session[:logged_in] = true
 			session[:username] = username
 			session[:team_id] = team.id
+			
 			{
 				success: true,
 				team_id: team.id,

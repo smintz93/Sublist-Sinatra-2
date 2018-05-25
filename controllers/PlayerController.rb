@@ -47,7 +47,7 @@ class PlayerController < ApplicationController
 		username = @payload[:username]
 		password = @payload[:password]
 
-		player = Player.find_by username: username
+		player = Player.find_by({:username => username})
 
 
 		if player && player.authenticate(password)
@@ -91,8 +91,8 @@ class PlayerController < ApplicationController
 	end	
 
 	get "/:id" do 
-		players = Player.find params[:id]
-		this_player_games = players.games
+		player = Player.find params[:id]
+		this_player_games = player.games
 
 			{  
 				success: true,
@@ -101,6 +101,69 @@ class PlayerController < ApplicationController
 			}.to_json	
 
 	end	
+
+
+
+	# send back array of all games with a boolean attached indicating whter or not this player is aavailable for game
+	# we need to do this because the games database does not currently contain availability boolean for a  particular player
+	# get '/:id/signedup' do
+	# 	# player = Player.find params[:id]
+	# 	# this_player_games = player.games
+
+	# 	# need to query availabilities table to see if player is in table 
+		
+
+	# 	games = Game.all
+	# 	avails = Availability.find_by player_id: params[:id]
+
+	# 	# create a new array called availgames
+	# 	availgames = []
+
+	# 	# binding.pry
+
+	# 	games.each do |game|
+
+	# 		# create a new empty hash new_game
+
+	# 		new_game = {}
+
+	# 		# make it have the same key value pairs as game
+
+	# 		game.attributes.each do |key, value|
+	# 			new_game[:key] = value
+	# 		end	
+
+	# 		# set the availability boolean based on avails
+
+	# 			# if game.id appears in avails 
+	# 			# array_of_hashes.any? {|h| h[:a] == 11}
+	# 			# if avails.any? {|g| g[:game_id] == game.id}
+	# 			# includes?
+	# 			# if this changes to availgames then
+	# 			if avails.include?(game.id)
+	# 			# if(game.id) === avails
+	# 				# set it to true
+	# 				new_game[:available] = true
+	# 			else 
+	# 				# set it to false
+	# 				new_game[:available] = false
+	# 			#
+
+	# 			end
+
+	# 		availgames.push new_game
+
+	# 	end
+
+
+	# 	# binding.pry
+
+	# 	{
+	# 		success: true,
+	# 		message: "all games with signed up field added",
+	# 		availgames: availgames
+	# 	}.to_json
+	# end	
 
 
 end	
