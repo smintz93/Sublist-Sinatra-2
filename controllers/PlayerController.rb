@@ -108,7 +108,7 @@ class PlayerController < ApplicationController
 	# we need to do this because the games database does not currently contain availability boolean for a  particular player
 	# and we want the checkboxes to be pre-populated based on database
 
-	get '/:id/signedup' do
+	get '/signedup/:id' do
 
 
 		# need to query availabilities table to see if player is in table 

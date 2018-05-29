@@ -1,5 +1,10 @@
 class AvailabilityController < ApplicationController 
 
+	## one route that adds availability and one that deletes
+	## test with postman 
+	## hit the correct route when someone clicks a check.
+	## update state once you hear back from db. 
+
 
 	# Json Body Filter 
 
@@ -25,8 +30,7 @@ class AvailabilityController < ApplicationController
 	get "/players" do
 
 		# binding.pry
-
-		available_players = Availability.where(available: true)
+		# available_players = Availability.where(player_id: player_id)
 
 
 		{  
@@ -58,7 +62,7 @@ class AvailabilityController < ApplicationController
 		# available = Availability.find params[:id]
 
 		player = Availability.where(player_id: player_id, game_id: game_id)
-		
+
 		{
 			success: true,
 			message: "this is the put route",
@@ -67,7 +71,7 @@ class AvailabilityController < ApplicationController
 
 	end	
 
-
+	## adding availibility
 	post "/players" do
 
 		puts "----"
@@ -76,93 +80,41 @@ class AvailabilityController < ApplicationController
 
 		puts @payload
 
+		available = Availability.new
+		available.game_id = @payload[:game_id]
+		available.player_id = @payload[:player_id]
+		available.save
+
 		# payload is sending all of state over with just first one clicked. BUT has player id game id and available is correctly switched to true
 
-		# for this to work like below the 8 games would need to be added to availibilities table?
-		##
+		# game1 = @payload[:game1].symbolize_keys
+		# avail1 = Availability.new
+		# avail1.game_id = game1[:game_id]
+		# avail1.player_id = game1[:player_id]
+		# avail1.available = game1[:available]
+		# avail1.save
 
-		## save 8 different availabilities. one for each game
-
-		## does not look like anything is getting stored here in game and player id (binding.pry)
-		## all avails have available set to true
-
-		## if @payload[:game_id] comes back null is response
-		## avail1.???? what comes after
-		## Does it have to be whatever I have in my table??
-
-		game1 = @payload[:game1].symbolize_keys
-		avail1 = Availability.new
-		avail1.game_id = game1[:game_id]
-		avail1.player_id = game1[:player_id]
-		avail1.available = game1[:available]
-		avail1.save
-
-		game2 = @payload[:game2].symbolize_keys
-		avail2 = Availability.new
-		avail2.game_id = game2[:game_id]
-		avail2.player_id = game2[:player_id]
-		avail2.available = game2[:available]
-		avail2.save
-
-		game3 = @payload[:game3].symbolize_keys
-		avail3 = Availability.new
-		avail3.game_id = game3[:game_id]
-		avail3.player_id = game3[:player_id]
-		avail3.available = game3[:available]
-		avail3.save
-
-		game4 = @payload[:game4].symbolize_keys
-		avail4 = Availability.new
-		avail4.game_id = game4[:game_id]
-		avail4.player_id = game4[:player_id]
-		avail4.available = game4[:available]
-		avail4.save
-
-		game5 = @payload[:game5].symbolize_keys
-		avail5 = Availability.new
-		avail5.game_id = game5[:game_id]
-		avail5.player_id = game5[:player_id]
-		avail5.available = game5[:available]
-		avail5.save
-
-
-		game6 = @payload[:game6].symbolize_keys
-		avail6 = Availability.new
-		avail6.game_id = game6[:game_id]
-		avail6.player_id = game6[:player_id]
-		avail6.available = game6[:available]
-		avail6.save
-
-		game7 = @payload[:game7].symbolize_keys
-		avail7 = Availability.new
-		avail7.game_id = game7[:game_id]
-		avail7.player_id = game7[:player_id]
-		avail7.available = game7[:available]
-		avail7.save
-
-       	game8 = @payload[:game8].symbolize_keys
-		avail8 = Availability.new
-		avail8.game_id = game8[:game_id]
-		avail8.player_id = game8[:player_id]
-		avail8.available = game8[:available]
-		avail8.save
-		# game id and player id is null right now 
-		# available is true
-
-		# binding.pry
+		# # binding.pry
 	
-		# the response for each game changes avail to true
+		# # the response for each game changes avail to true
 		{
 			success: true,
-			game1: avail1,
-			game2: avail2,
-			game3: avail3,
-			game4: avail4,
-			game5: avail5,
-			game6: avail6,
-			game7: avail7,
-			game8: avail8,
+			available: available,
 			message: "This is available/players route in availabilityController"
+		}.to_json
+
+	end	
+
+	# remove availability  
+	delete '/players/:id' do
+
+		available = Availability.find(params[:id])
+		available.destroy
+
+		{
+			success: true,
+			available: available,
+			message: "remove availability route"
 		}.to_json
 
 	end	

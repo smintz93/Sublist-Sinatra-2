@@ -38,3 +38,5 @@ CREATE TABLE availabilities(
     player_id INT REFERENCES players(id),
     game_id INT REFERENCES games(id)
 );
+
+
