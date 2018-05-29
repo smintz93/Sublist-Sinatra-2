@@ -106,64 +106,78 @@ class PlayerController < ApplicationController
 
 	# send back array of all games with a boolean attached indicating whter or not this player is aavailable for game
 	# we need to do this because the games database does not currently contain availability boolean for a  particular player
-	# get '/:id/signedup' do
-	# 	# player = Player.find params[:id]
-	# 	# this_player_games = player.games
+	# and we want the checkboxes to be pre-populated based on database
 
-	# 	# need to query availabilities table to see if player is in table 
+	get '/:id/signedup' do
+
+
+		# need to query availabilities table to see if player is in table 
 		
 
-	# 	games = Game.all
-	# 	avails = Availability.find_by player_id: params[:id]
+		games = Game.all
+		avails = Availability.where player_id: params[:id] # use where because it returns multiple games
 
-	# 	# create a new array called availgames
-	# 	availgames = []
-
-	# 	# binding.pry
-
-	# 	games.each do |game|
-
-	# 		# create a new empty hash new_game
-
-	# 		new_game = {}
-
-	# 		# make it have the same key value pairs as game
-
-	# 		game.attributes.each do |key, value|
-	# 			new_game[:key] = value
-	# 		end	
-
-	# 		# set the availability boolean based on avails
-
-	# 			# if game.id appears in avails 
-	# 			# array_of_hashes.any? {|h| h[:a] == 11}
-	# 			# if avails.any? {|g| g[:game_id] == game.id}
-	# 			# includes?
-	# 			# if this changes to availgames then
-	# 			if avails.include?(game.id)
-	# 			# if(game.id) === avails
-	# 				# set it to true
-	# 				new_game[:available] = true
-	# 			else 
-	# 				# set it to false
-	# 				new_game[:available] = false
-	# 			#
-
-	# 			end
-
-	# 		availgames.push new_game
-
-	# 	end
+		## what is avails
+			# find by player id in the availability table 
+			# how can I iterate over this if its not an array? -- fortunately .each appears to work
 
 
-	# 	# binding.pry
+		# create a new array called availgames
+		availgames = []
 
-	# 	{
-	# 		success: true,
-	# 		message: "all games with signed up field added",
-	# 		availgames: availgames
-	# 	}.to_json
-	# end	
+
+		games.each do |game|
+			
+			puts ""
+			puts "here is the game we are about to work with"
+			pp game
+			puts ""
+
+			# create a new empty hash new_game
+			new_game = {}
+
+			# make it have the same key value pairs as game
+			game.attributes.each do |key, value|
+				new_game[key] = value
+			end	
+
+			# plus, add an availability boolean based on whether game.id appears in avails or not
+
+													
+			it_is_there = false
+
+			# loop over avails with .each if this game id is found set is it there to true
+
+			avails.each do |a|
+				puts "here is the availability we are currently on in avails.each loop"
+				pp a
+
+				if(game.id === a.game_id)
+					it_is_there = true
+
+				end	
+			end	
+
+
+
+			if it_is_there
+				# set it to true
+				new_game[:available] = true
+			else 
+				# set it to false
+				new_game[:available] = false
+			end
+
+			availgames.push new_game
+
+		end
+
+		{
+			success: true,
+			message: "all games with signed up field added",
+			availgames: availgames
+		}.to_json
+	end	
 
 
 end	

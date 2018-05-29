@@ -36,6 +36,5 @@ CREATE TABLE players(
 CREATE TABLE availabilities(
     id SERIAL PRIMARY KEY,
     player_id INT REFERENCES players(id),
-    game_id INT REFERENCES games(id),
-    available BOOLEAN
+    game_id INT REFERENCES games(id)
 );
