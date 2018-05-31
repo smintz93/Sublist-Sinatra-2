@@ -3,6 +3,7 @@ class AvailabilityController < ApplicationController
 	## one route that adds availability and one that deletes
 	## test with postman 
 	## hit the correct route when someone clicks a check.
+
 	## update state once you hear back from db. 
 
 
@@ -109,6 +110,7 @@ class AvailabilityController < ApplicationController
 	delete '/players/:id' do
 
 		available = Availability.find(params[:id])
+		# available = Availability.where([player_id = session[:player_id], game_id = :game_id])
 		available.destroy
 
 		{

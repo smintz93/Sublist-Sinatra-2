@@ -1,4 +1,4 @@
--- INSERT INTO players (name, pos, email, phone) VALUES ('Sam', 'Def', 'sam@gmail.com', '773-123-2456');
+INSERT INTO players (name, pos, email, phone) VALUES ('Sam', 'Def', 'sam@gmail.com', '773-123-2456');
 INSERT INTO players (name, pos, email, phone) VALUES ('Noemi', 'Mid', 'Noemi@gmail.com', '773-456-1231');
 INSERT INTO players (name, pos, email, phone) VALUES ('Irwin', 'Fwd', 'Irwin@gmail.com', '773-145-1293');
 INSERT INTO players (name, pos, email, phone) VALUES ('Samat', 'Mid', 'Samat@gmail.com', '312-232-2356');

@@ -153,7 +153,7 @@ class PlayerController < ApplicationController
 				pp a
 
 				if(game.id === a.game_id)
-					it_is_there = true
+					it_is_there = a.id
 
 				end	
 			end	
@@ -163,6 +163,7 @@ class PlayerController < ApplicationController
 			if it_is_there
 				# set it to true
 				new_game[:available] = true
+				new_game[:availability_id] = it_is_there
 			else 
 				# set it to false
 				new_game[:available] = false
